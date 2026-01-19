@@ -1,0 +1,16 @@
+{
+  "flashcards": [
+    {
+      "id": 1,
+      "question": "What does CIA stand for in cybersecurity?",
+      "answer": "Confidentiality, Integrity, Availability",
+      "category": "Fundamentals"
+    },
+    {
+      "id": 2,
+      "question": "What is a zero-day vulnerability?",
+      "answer": "A previously unknown software vulnerability that has not yet been patched",
+      "category": "Vulnerabilities"
+    }
+  ]
+}

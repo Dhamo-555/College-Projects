@@ -1,0 +1,16 @@
+{
+  "mitre_attack": {
+    "reconnaissance": {
+      "id": "TA0043",
+      "description": "Gather information used as the foundation for targeting"
+    },
+    "resource_development": {
+      "id": "TA0042",
+      "description": "Establish resources used to support targeting"
+    },
+    "initial_access": {
+      "id": "TA0001",
+      "description": "Techniques used to gain initial access to systems"
+    }
+  }
+}

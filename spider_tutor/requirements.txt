@@ -1,0 +1,26 @@
+# Core
+python-dotenv==1.0.1
+rich==13.7.1
+click==8.1.7
+
+# Voice - Speech Recognition
+SpeechRecognition==3.10.4
+
+# Voice - Text to Speech
+pyttsx3==2.90
+gTTS==2.5.1
+playsound==1.2.2
+
+# AI/LLM
+openai==1.40.0
+anthropic==0.34.0
+
+# Optional: Local LLM
+ollama==0.3.0
+
+# Web UI (optional)
+gradio==4.40.0
+
+# Utilities
+requests==2.32.3
+pydantic==2.8.2
