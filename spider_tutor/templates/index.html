@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🕷️ Spider - Cybersecurity Tutor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1e40af;
+            --secondary: #0f172a;
+            --accent: #7c3aed;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --light: #f8fafc;
+            --dark: #0f172a;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* ======================== Header ======================== */
+        header {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #64748b;
+            font-size: 1.1em;
+        }
+
+        /* ======================== Main Layout ======================== */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ======================== Card Styles ======================== */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .card h2 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ======================== Chat Section ======================== */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 500px;
+            grid-column: 1 / -1;
+        }
+
+        .chat-box {
+            flex: 1;
+            overflow-y: auto;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #f8fafc;
+        }
+
+        .chat-message {
+            margin-bottom: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            background: var(--primary);
+            color: white;
+            margin-left: 20px;
+            text-align: right;
+        }
+
+        .bot-message {
+            background: #e2e8f0;
+            color: var(--dark);
+            margin-right: 20px;
+        }
+
+        .bot-message strong {
+            color: var(--accent);
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .chat-input input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* ======================== Buttons ======================== */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--primary);
+            border: 2px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 0.9em;
+        }
+
+        .btn-block {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        /* ======================== Forms ======================== */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+
+        /* ======================== Tabs ======================== */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .tab-btn {
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            color: #64748b;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ======================== Loading Spinner ======================== */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(102, 126, 234, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ======================== Alert Styles ======================== */
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            color: #1e40af;
+            border-left: 4px solid #1e40af;
+        }
+
+        .alert-success {
+            background: #dcfce7;
+            color: #15803d;
+            border-left: 4px solid #15803d;
+        }
+
+        .alert-warning {
+            background: #fef3c7;
+            color: #b45309;
+            border-left: 4px solid #b45309;
+        }
+
+        .alert-danger {
+            background: #fee2e2;
+            color: #991b1b;
+            border-left: 4px solid #991b1b;
+        }
+
+        /* ======================== Footer ======================== */
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        footer p {
+            opacity: 0.9;
+        }
+
+        /* ======================== Responsive Grid ======================== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .feature-card .icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #64748b;
+            font-size: 0.95em;
+        }
+
+        /* ======================== Templates Display ======================== */
+        .template-content {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        /* ======================== Flashcard Display ======================== */
+        .flashcard {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 20px 0;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .flashcard .label {
+            opacity: 0.8;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .flashcard .content {
+            font-size: 1.3em;
+            margin: 20px 0;
+            font-weight: 600;
+        }
+
+        .flashcard .meta {
+            opacity: 0.7;
+            font-size: 0.85em;
+            margin-top: 20px;
+        }
+
+        /* ======================== Loading State ======================== */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>🕷️ Spider</h1>
+            <p>Your AI-Powered Cybersecurity Learning Companion</p>
+        </header>
+
+        <!-- Main Navigation Tabs -->
+        <div class="card" style="margin-bottom: 30px;">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="chat">💬 Chat</button>
+                <button class="tab-btn" data-tab="flashcards">🎴 Flashcards</button>
+                <button class="tab-btn" data-tab="quiz">📝 Quiz</button>
+                <button class="tab-btn" data-tab="mitre">🎯 MITRE ATT&CK</button>
+                <button class="tab-btn" data-tab="templates">📋 Templates</button>
+                <button class="tab-btn" data-tab="checklist">✅ Checklists</button>
+            </div>
+        </div>
+
+        <!-- Chat Tab -->
+        <div id="chat" class="tab-content active">
+            <div class="card chat-container">
+                <h2>💬 Chat with Spider</h2>
+                <div class="chat-box" id="chatBox"></div>
+                <div class="chat-input">
+                    <input type="text" id="chatInput" placeholder="Ask a cybersecurity question...">
+                    <button class="btn btn-primary" onclick="sendChat()">Send</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flashcards Tab -->
+        <div id="flashcards" class="tab-content">
+            <div class="main-grid">
+                <div class="card">
+                    <h2>🎴 Study Flashcards</h2>
+                    <p style="color: #64748b; margin-bottom: 20px;">Click below to get a random flashcard to study.</p>
+                    <button class="btn btn-primary btn-block" onclick="getFlashcard()">Get Random Flashcard</button>
+                    <div id="flashcardDisplay"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Tab -->
+        <div id="quiz" class="tab-content">
+            <div class="main-grid">
+                <div class="card">
+                    <h2>📝 Quiz</h2>
+                    <div class="form-group">
+                        <label for="quizCount">Number of Questions:</label>
+                        <select id="quizCount">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary btn-block" onclick="generateQuiz()">Generate Quiz</button>
+                    <div id="quizDisplay" style="margin-top: 20px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MITRE ATT&CK Tab -->
+        <div id="mitre" class="tab-content">
+            <div class="main-grid">
+                <div class="card">
+                    <h2>🎯 MITRE ATT&CK Lookup</h2>
+                    <div class="form-group">
+                        <label for="mitreInput">Technique ID or Keyword:</label>
+                        <input type="text" id="mitreInput" placeholder="e.g., T1566 or phishing">
+                    </div>
+                    <button class="btn btn-primary btn-block" onclick="searchMitre()">Search</button>
+                    <div id="mitreDisplay" style="margin-top: 20px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Templates Tab -->
+        <div id="templates" class="tab-content">
+            <div class="main-grid">
+                <div class="card">
+                    <h2>📋 Incident Report Template</h2>
+                    <button class="btn btn-primary btn-block" onclick="getIncidentTemplate()">Load Template</button>
+                    <div id="incidentDisplay"></div>
+                </div>
+                <div class="card">
+                    <h2>📋 Vulnerability Report Template</h2>
+                    <button class="btn btn-primary btn-block" onclick="getVulnTemplate()">Load Template</button>
+                    <div id="vulnDisplay"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checklist Tab -->
+        <div id="checklist" class="tab-content">
+            <div class="main-grid">
+                <div class="card">
+                    <h2>✅ Hardening Checklist</h2>
+                    <div class="form-group">
+                        <label for="systemType">Select System Type:</label>
+                        <select id="systemType" onchange="getChecklist()">
+                            <option value="general">General</option>
+                            <option value="linux">Linux</option>
+                            <option value="windows">Windows</option>
+                            <option value="network">Network</option>
+                        </select>
+                    </div>
+                    <div id="checklistDisplay" style="margin-top: 20px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features-grid" style="margin-top: 40px;">
+            <div class="feature-card">
+                <div class="icon">🤖</div>
+                <h3>AI-Powered</h3>
+                <p>Get instant answers from advanced AI models</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">📚</div>
+                <h3>Knowledge Base</h3>
+                <p>Access comprehensive cybersecurity knowledge</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">🔒</div>
+                <h3>Safe & Secure</h3>
+                <p>Built-in safety filters for all interactions</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon">📊</div>
+                <h3>MITRE Framework</h3>
+                <p>Look up MITRE ATT&CK techniques instantly</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>🕷️ Spider Tutor - Your Friendly Cybersecurity Learning Companion</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Created by: Dhamodharaprashad</p>
+        </footer>
+    </div>
+
+    <script>
+        // ======================== Tab Navigation ========================
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tabName = this.getAttribute('data-tab');
+                
+                // Hide all tabs
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                // Remove active class from all buttons
+                document.querySelectorAll('.tab-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                
+                // Show selected tab
+                document.getElementById(tabName).classList.add('active');
+                this.classList.add('active');
+            });
+        });
+
+        // ======================== Chat Functions ========================
+        async function sendChat() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            const chatBox = document.getElementById('chatBox');
+            
+            // Add user message to chat
+            const userMsg = document.createElement('div');
+            userMsg.className = 'chat-message user-message';
+            userMsg.textContent = message;
+            chatBox.appendChild(userMsg);
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+            
+            try {
+                // Show loading indicator
+                const loadingMsg = document.createElement('div');
+                loadingMsg.className = 'chat-message bot-message';
+                loadingMsg.innerHTML = '<span class="spinner"></span> Thinking...';
+                chatBox.appendChild(loadingMsg);
+                chatBox.scrollTop = chatBox.scrollHeight;
+                
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message })
+                });
+                
+                const data = await response.json();
+                
+                // Remove loading message
+                chatBox.removeChild(loadingMsg);
+                
+                if (response.ok) {
+                    // Add bot response
+                    const botMsg = document.createElement('div');
+                    botMsg.className = 'chat-message bot-message';
+                    botMsg.textContent = data.response;
+                    chatBox.appendChild(botMsg);
+                } else {
+                    const errMsg = document.createElement('div');
+                    errMsg.className = 'chat-message bot-message';
+                    errMsg.innerHTML = `<strong>Error:</strong> ${data.detail || data.error || 'Unknown error'}`;
+                    chatBox.appendChild(errMsg);
+                }
+                chatBox.scrollTop = chatBox.scrollHeight;
+            } catch (error) {
+                // Remove loading message if exists
+                if (chatBox.lastElementChild.innerHTML.includes('Thinking')) {
+                    chatBox.removeChild(chatBox.lastElementChild);
+                }
+                
+                const errMsg = document.createElement('div');
+                errMsg.className = 'chat-message bot-message';
+                errMsg.innerHTML = `<strong>Error:</strong> ${error.message}`;
+                chatBox.appendChild(errMsg);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        }
+
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendChat();
+        });
+
+        // ======================== Flashcard Functions ========================
+        async function getFlashcard() {
+            try {
+                const response = await fetch('/api/flashcard');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    const card = data;
+                    document.getElementById('flashcardDisplay').innerHTML = `
+                        <div class="flashcard">
+                            <div class="label">Question</div>
+                            <div class="content">${card.question}</div>
+                            <div class="label">Answer</div>
+                            <div class="content" style="font-size: 1.1em;">${card.answer}</div>
+                            <div class="meta">
+                                📁 ${card.category} | ⭐ ${card.difficulty}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    document.getElementById('flashcardDisplay').innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('flashcardDisplay').innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
+            }
+        }
+
+        // ======================== Quiz Functions ========================
+        async function generateQuiz() {
+            const count = document.getElementById('quizCount').value;
+            
+            try {
+                const response = await fetch('/api/quiz', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ count: parseInt(count) })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    let html = '<div class="alert alert-info">📝 Quiz Questions (Answers below)</div>';
+                    data.questions.forEach((q, idx) => {
+                        html += `
+                            <div style="margin: 20px 0; padding: 15px; background: #f8fafc; border-radius: 8px;">
+                                <strong>Q${idx + 1}: ${q.question}</strong>
+                                <p style="color: #64748b; margin-top: 10px; cursor: pointer; text-decoration: underline;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none';">Show Answer</p>
+                                <p style="color: var(--success); margin-top: 10px; display: none;"><strong>Answer:</strong> ${q.answer}</p>
+                            </div>
+                        `;
+                    });
+                    document.getElementById('quizDisplay').innerHTML = html;
+                } else {
+                    document.getElementById('quizDisplay').innerHTML = `<div class="alert alert-danger">${data.detail}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('quizDisplay').innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
+            }
+        }
+
+        // ======================== MITRE Functions ========================
+        async function searchMitre() {
+            const techId = document.getElementById('mitreInput').value.trim();
+            
+            if (!techId) {
+                document.getElementById('mitreDisplay').innerHTML = '<div class="alert alert-warning">Please enter a technique ID or keyword</div>';
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/mitre', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tech_id: techId })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    if (data.results) {
+                        let html = '<div class="alert alert-info">Found ' + data.results.length + ' techniques:</div>';
+                        data.results.forEach(r => {
+                            html += `<div style="padding: 10px; background: #f8fafc; margin: 10px 0; border-radius: 8px;"><strong>${r.id}: ${r.name}</strong></div>`;
+                        });
+                        document.getElementById('mitreDisplay').innerHTML = html;
+                    } else {
+                        document.getElementById('mitreDisplay').innerHTML = `
+                            <div style="padding: 20px; background: #f8fafc; border-radius: 8px;">
+                                <strong>${data.id}: ${data.name}</strong>
+                                <p style="margin-top: 10px; color: #64748b;">${data.description}</p>
+                            </div>
+                        `;
+                    }
+                } else {
+                    document.getElementById('mitreDisplay').innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('mitreDisplay').innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
+            }
+        }
+
+        // ======================== Template Functions ========================
+        async function getIncidentTemplate() {
+            try {
+                const response = await fetch('/api/incident-template');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('incidentDisplay').innerHTML = `<div class="template-content">${data.template}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('incidentDisplay').innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
+            }
+        }
+
+        async function getVulnTemplate() {
+            try {
+                const response = await fetch('/api/vuln-template');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('vulnDisplay').innerHTML = `<div class="template-content">${data.template}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('vulnDisplay').innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
+            }
+        }
+
+        // ======================== Checklist Functions ========================
+        async function getChecklist() {
+            const systemType = document.getElementById('systemType').value;
+            
+            try {
+                const response = await fetch(`/api/checklist/${systemType}`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('checklistDisplay').innerHTML = `<div class="template-content">${data.checklist}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('checklistDisplay').innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+/workspaces/College-Projects/spider_tutor/venv/lib/python3.12/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_name" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+🤖 OpenAI client initialized (model: gpt-4o-mini)
